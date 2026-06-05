@@ -1,4 +1,4 @@
-const CONFIG = {
-  API_URL: 'http://localhost:4000',
-  WS_URL: 'http://localhost:4000',
+window.CONFIG = {
+  API_URL: "https://quizspark-backend.onrender.com",
+  WS_URL: "https://quizspark-backend.onrender.com"
 };
