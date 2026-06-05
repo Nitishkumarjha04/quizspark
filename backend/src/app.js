@@ -9,9 +9,15 @@ const userRoutes = require('./routes/user');
 
 const app = express();
 
+const cors = require('cors');
+
 app.use(cors({
-  origin: process.env.CLIENT_URL || '*',
-  credentials: true,
+  origin: [
+    'http://localhost:3000',
+    'http://localhost:5173',
+    'https://heroic-madeleine-d82750.netlify.app'
+  ],
+  credentials: true
 }));
 
 app.use(express.json({ limit: '2mb' }));
