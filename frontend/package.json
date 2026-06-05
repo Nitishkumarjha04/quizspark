@@ -1,0 +1,13 @@
+{
+  "name": "quizspark-frontend",
+  "version": "1.0.0",
+  "description": "QuizSpark frontend — Vanilla JS SPA",
+  "scripts": {
+    "dev": "npx serve public -l 3000",
+    "build": "echo 'Static site — no build step needed'",
+    "preview": "npx serve public -l 3000"
+  },
+  "devDependencies": {
+    "serve": "^14.2.3"
+  }
+}
