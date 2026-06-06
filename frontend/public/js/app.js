@@ -13,7 +13,8 @@
   Router.define('/room/:code/host', ({ code }) => renderRoomHost({ code }));
   Router.define('/room/:code/play', ({ code }) => renderRoomPlayer({ code }));
   Router.define('/room/:code/results', ({ code }) => renderResults({ code }));
-
+  Router.define('/profile', renderProfile);
+  
   Router.init();
 
   document.getElementById('logout-btn')?.addEventListener('click', () => {
