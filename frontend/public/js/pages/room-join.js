@@ -7,7 +7,12 @@ function renderRoomJoin() {
         <p style="color:var(--muted);margin-bottom:28px;">Enter the 6-digit code from the host</p>
         <input id="join-code" class="code-input" placeholder="ABC123" maxlength="6" autocomplete="off" spellcheck="false">
         <div id="join-nickname-wrap" style="margin-top:14px;">
-          <input id="join-nickname" class="form-input" placeholder="Your nickname (optional)" style="text-align:center;">
+         <input
+         id="join-nickname"
+          class="form-input"
+           placeholder="Enter your name"
+           required
+            style="text-align:center;">
         </div>
         <button id="join-btn" class="btn-primary" style="width:100%;justify-content:center;margin-top:18px;padding:14px;">Join room →</button>
         <div id="join-error" class="form-error hidden" style="margin-top:10px;text-align:center;"></div>
@@ -31,8 +36,16 @@ function renderRoomJoin() {
     try {
       const data = await API.room.get(code);
       if (data.room.status === 'finished') throw new Error('This game has already ended');
-      const nickname = document.getElementById('join-nickname').value.trim() || undefined;
-      Router.navigate(`/room/${code}/play${nickname?`?nick=${encodeURIComponent(nickname)}`:''}`);
+      const nickname = document.getElementById('join-nickname').value.trim();
+
+       if (!nickname) {
+          errEl.textContent = 'Please enter your name';
+            errEl.classList.remove('hidden');
+           btn.disabled = false;
+           btn.textContent = 'Join room →';
+           return;
+            }
+      Router.navigate(`/room/${code}/play?nick=${encodeURIComponent(nickname)}`);
     } catch (err) {
       errEl.textContent = err.message;
       errEl.classList.remove('hidden');

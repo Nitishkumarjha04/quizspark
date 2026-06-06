@@ -3,7 +3,15 @@ let questionStartTime = null;
 
 function renderRoomPlayer({ code }) {
   const params = new URLSearchParams(window.location.search);
-  const nickname = params.get('nick') || Auth.getUser()?.username || 'Player';
+  let nickname = params.get('nick');
+
+    if (!nickname) {
+    nickname = prompt('Enter your name');
+
+     if (!nickname || !nickname.trim()) {
+    nickname = 'Guest';
+  }
+}
 
   document.getElementById('view').innerHTML = `
     <div style="max-width:720px;margin:0 auto;padding:32px 24px;">
