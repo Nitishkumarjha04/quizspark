@@ -10,9 +10,37 @@ function renderLogin() {
           <input id="login-email" class="form-input" type="email" placeholder="you@example.com" autocomplete="email">
         </div>
         <div class="form-group">
-          <label class="form-label">Password</label>
-          <input id="login-password" class="form-input" type="password" placeholder="••••••••" autocomplete="current-password">
-        </div>
+  <label class="form-label">Password</label>
+
+  <div style="position:relative;">
+    <input
+      id="login-password"
+      class="form-input"
+      type="password"
+      placeholder="••••••••"
+      autocomplete="current-password"
+      style="padding-right:50px;"
+     >
+
+      <button
+      type="button"
+      id="toggle-login-password"
+      style="
+        position:absolute;
+        right:12px;
+        top:50%;
+        transform:translateY(-50%);
+        background:none;
+        border:none;
+        cursor:pointer;
+        color:var(--muted);
+        font-size:18px;
+         "
+         >
+          👁
+          </button>
+           </div>
+          </div>
         <button id="login-btn" class="btn-primary" style="width:100%;justify-content:center;margin-top:4px;">Log in</button>
         <div class="auth-footer">
           Don't have an account? <a href="/register" data-link>Sign up</a>
@@ -24,6 +52,19 @@ function renderLogin() {
   const passEl  = document.getElementById('login-password');
   const btn     = document.getElementById('login-btn');
   const errEl   = document.getElementById('login-error');
+  const togglePassBtn = document.getElementById('toggle-login-password');
+
+     togglePassBtn.addEventListener('click', () => {
+
+   if (passEl.type === 'password') {
+    passEl.type = 'text';
+    togglePassBtn.textContent = '🙈';
+   } else {
+    passEl.type = 'password';
+    togglePassBtn.textContent = '👁';
+   }
+  
+    });
 
   async function doLogin() {
     errEl.classList.add('hidden');

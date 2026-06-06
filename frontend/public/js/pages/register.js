@@ -14,16 +14,59 @@ function renderRegister() {
           <input id="reg-email" class="form-input" type="email" placeholder="you@example.com" autocomplete="email">
         </div>
         <div class="form-group">
-          <label class="form-label">Password</label>
-          <input id="reg-password" class="form-input" type="password" placeholder="Min 6 characters" autocomplete="new-password">
+  <label class="form-label">Password</label>
+
+  <div style="position:relative;">
+    <input
+      id="reg-password"
+      class="form-input"
+      type="password"
+      placeholder="Min 6 characters"
+      autocomplete="new-password"
+      style="padding-right:50px;"
+    >
+
+    <button
+      type="button"
+      id="toggle-reg-password"
+      style="
+        position:absolute;
+        right:12px;
+        top:50%;
+        transform:translateY(-50%);
+        background:none;
+        border:none;
+        cursor:pointer;
+        color:var(--muted);
+        font-size:18px;
+       "
+       >
+        👁
+       </button>
+       </div>
         </div>
         <button id="reg-btn" class="btn-primary" style="width:100%;justify-content:center;margin-top:4px;">Create account</button>
         <div class="auth-footer">Already have an account? <a href="/login" data-link>Log in</a></div>
       </div>
     </div>`;
 
-  const btn   = document.getElementById('reg-btn');
-  const errEl = document.getElementById('reg-error');
+   const btn   = document.getElementById('reg-btn');
+    const errEl = document.getElementById('reg-error');
+
+     const regPassEl = document.getElementById('reg-password');
+     const toggleRegPassBtn = document.getElementById('toggle-reg-password');
+
+     toggleRegPassBtn.addEventListener('click', () => {
+
+      if (regPassEl.type === 'password') {
+     regPassEl.type = 'text';
+      toggleRegPassBtn.textContent = '🙈';
+     } else {
+     regPassEl.type = 'password';
+     toggleRegPassBtn.textContent = '👁';
+  }
+
+});
 
   async function doRegister() {
     errEl.classList.add('hidden');
