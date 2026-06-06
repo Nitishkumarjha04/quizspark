@@ -60,11 +60,35 @@ body::before {
   transition: color 0.2s;
 }
 .nav-links a:hover, .nav-auth a:hover { color: var(--text); }
-.nav-auth { display: flex; align-items: center; gap: 10px; }
+.nav-auth {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: auto;
+}
+
+#nav-user {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 .nav-avatar {
-  position: relative; cursor: pointer;
-  display: flex; align-items: center; gap: 8px;
-  font-size: 14px; color: var(--text);
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 140px;
+  white-space: nowrap;
+  color: var(--text);
+}
+
+#nav-username {
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .nav-dropdown {
   display: none; position: absolute; top: 100%; right: 0;
