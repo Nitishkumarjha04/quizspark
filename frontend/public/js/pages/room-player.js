@@ -16,7 +16,14 @@ function renderRoomPlayer({ code }) {
   playerSocket = io(API.wsUrl(), { auth: { token } });
 
   playerSocket.on('connect', () => {
-    playerSocket.emit('room:join', { code, nickname, avatar: Auth.getUser()?.avatar || '' });
+
+  setupPlayerAnswerAck();
+
+  playerSocket.emit('room:join', {
+    code,
+    nickname,
+    avatar: Auth.getUser()?.avatar || ''
+    });
   });
 
   playerSocket.on('room:joined', ({ room }) => renderPlayerWaiting(room, nickname));
@@ -138,19 +145,57 @@ playerSocket && (playerSocket._callbacks = playerSocket._callbacks || {});
 
 // Listen for answer ack
 function setupPlayerAnswerAck() {
+
   if (!playerSocket) return;
+
   playerSocket.on('answer:ack', ({ correct, pointsEarned, correctIndex }) => {
+
     const btns = document.querySelectorAll('.option-btn');
-    btns[correctIndex]?.classList.add('correct');
-    if (!correct) {
-      btns.forEach((b, i) => { if (b.classList.contains('selected') && i !== correctIndex) b.classList.add('wrong'); });
+
+    if (correct) {
+
+      btns.forEach(btn => {
+        if (btn.classList.contains('selected')) {
+          btn.style.backgroundColor = '#22c55e';
+          btn.style.borderColor = '#22c55e';
+          btn.style.color = '#fff';
+        }
+      });
+  
+         } else {
+
+         btns.forEach((btn, index) => {
+
+         if (btn.classList.contains('selected')) {
+          btn.style.backgroundColor = '#ef4444';
+          btn.style.borderColor = '#ef4444';
+          btn.style.color = '#fff';
+        }
+
+        if (index === correctIndex) {
+          btn.style.backgroundColor = '#22c55e';
+          btn.style.borderColor = '#22c55e';
+          btn.style.color = '#fff';
+        }
+
+      });
+
     }
+
     const fb = document.getElementById('p-feedback');
+
     if (fb) {
-      fb.textContent = correct ? `✓ Correct! +${pointsEarned} pts` : '✗ Wrong';
-      fb.style.color = correct ? 'var(--green)' : 'var(--red)';
+      fb.innerHTML = correct
+        ? `✅ Correct! +${pointsEarned} points`
+        : `❌ Wrong Answer`;
+
+      fb.style.color = correct ? '#22c55e' : '#ef4444';
+      fb.style.fontWeight = '700';
+      fb.style.fontSize = '18px';
     }
+
   });
+
 }
 
 function disableOptions() {
