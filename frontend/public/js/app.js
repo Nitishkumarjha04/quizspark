@@ -24,8 +24,25 @@
 
   // Fix player socket answer ack — attach once after socket created
   const origRenderPlayer = renderRoomPlayer;
-  window.renderRoomPlayer = function(params) {
+   window.renderRoomPlayer = function(params) {
     origRenderPlayer(params);
     setTimeout(setupPlayerAnswerAck, 500);
   };
+
+  const avatar = document.getElementById('nav-avatar-btn');
+  const dropdown = document.getElementById('nav-dropdown');
+
+  if (avatar && dropdown) {
+
+    avatar.addEventListener('click', (e) => {
+      e.stopPropagation();
+      dropdown.classList.toggle('open');
+    });
+
+    document.addEventListener('click', () => {
+      dropdown.classList.remove('open');
+    });
+
+  }
+
 })();

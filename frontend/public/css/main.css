@@ -72,7 +72,10 @@ body::before {
   border-radius: var(--radius-sm); padding: 6px; min-width: 160px;
   margin-top: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.4);
 }
-.nav-avatar:hover .nav-dropdown { display: flex; flex-direction: column; }
+.nav-dropdown.open {
+  display: flex;
+  flex-direction: column;
+}
 .nav-dropdown a, .nav-dropdown button {
   padding: 8px 12px; border-radius: 6px; font-size: 14px;
   color: var(--text); text-decoration: none; cursor: pointer;
