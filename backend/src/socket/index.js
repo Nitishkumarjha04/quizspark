@@ -178,21 +178,50 @@ function initSocket(server) {
     // ── DISCONNECT
     socket.on('disconnect', async () => {
       if (!socket.roomCode) return;
-      try {
-        const room = await Room.findOne({ code: socket.roomCode });
-        if (!room) return;
 
-        if (socket.isHost) {
-          io.to(socket.roomCode).emit('room:host-left', { message: 'Host disconnected' });
-        } else {
-          room.players = room.players.filter(p => p.socketId !== socket.id);
-          await room.save();
-          io.to(socket.roomCode).emit('room:players-updated', {
-            players: room.players.map(p => ({ nickname: p.nickname, avatar: p.avatar, score: p.score })),
-          });
+      try {
+       const room = await Room.findOne({ code: socket.roomCode });
+       if (!room) return;
+
+       if (socket.isHost) {
+        io.to(socket.roomCode).emit('room:host-left', {
+        message: 'Host disconnected',
+       });
+       } else {
+
+       if (room.status === 'waiting') {
+
+        // Remove player only before game starts
+        room.players = room.players.filter(
+          p => p.socketId !== socket.id
+        );
+
+       } else {
+
+        // Keep score and answers for leaderboard
+        const player = room.players.find(
+          p => p.socketId === socket.id
+        );
+
+        if (player) {
+          player.socketId = null;
         }
-      } catch {}
-    });
+      }
+
+      await room.save();
+
+      io.to(socket.roomCode).emit('room:players-updated', {
+        players: room.players.map(p => ({
+          nickname: p.nickname,
+          avatar: p.avatar,
+          score: p.score,
+        })),
+      });
+    }
+  } catch (err) {
+    console.error(err);
+  }
+});
   });
 
   return io;
