@@ -63,3 +63,31 @@ exports.updateProfile = async (req, res, next) => {
     res.json({ success: true, user });
   } catch (err) { next(err); }
 };
+exports.changePassword = async (req, res, next) => {
+  try {
+
+    const { currentPassword, newPassword } = req.body;
+
+    const user = await User.findById(req.user._id);
+
+    const valid = await user.comparePassword(currentPassword);
+
+    if (!valid) {
+      return res.status(400).json({
+        success: false,
+        message: 'Current password is incorrect'
+      });
+    }
+
+    user.password = newPassword;
+    await user.save();
+
+    res.json({
+      success: true,
+      message: 'Password updated successfully'
+    });
+
+  } catch (err) {
+    next(err);
+  }
+};

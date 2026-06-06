@@ -1,6 +1,13 @@
 const router = require('express').Router();
 const { body } = require('express-validator');
-const { register, login, me, updateProfile } = require('../controllers/authController');
+const {
+  register,
+  login,
+  me,
+  updateProfile,
+  changePassword
+} = require('../controllers/authController');
+
 const { protect } = require('../middleware/auth');
 
 router.post('/register', [
@@ -16,5 +23,6 @@ router.post('/login', [
 
 router.get('/me', protect, me);
 router.patch('/me', protect, updateProfile);
+router.patch('/change-password', protect, changePassword);
 
 module.exports = router;

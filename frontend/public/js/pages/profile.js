@@ -43,7 +43,7 @@ function renderProfile() {
 
       </div>
 
-      <div class="card" style="padding:24px;margin-top:20px;">
+            <div class="card" style="padding:24px;margin-top:20px;">
 
         <h2>📊 Statistics</h2>
 
@@ -54,8 +54,29 @@ function renderProfile() {
 
       </div>
 
+      <div class="card" style="padding:24px;margin-top:20px;">
+
+        <h2>🔐 Change Password</h2>
+
+        <div class="form-group">
+          <label class="form-label">Current Password</label>
+          <input id="current-password" class="form-input" type="password">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">New Password</label>
+          <input id="new-password" class="form-input" type="password">
+        </div>
+
+        <button id="change-password-btn" class="btn-primary">
+          Update Password
+        </button>
+
+      </div>
+
     </div>
   `;
+  
 
   document.getElementById('save-profile-btn')
     .addEventListener('click', async () => {
@@ -87,5 +108,30 @@ function renderProfile() {
       }
 
     });
+    document.getElementById('change-password-btn')
+?.addEventListener('click', async () => {
+
+  try {
+
+    const currentPassword =
+      document.getElementById('current-password').value;
+
+    const newPassword =
+      document.getElementById('new-password').value;
+
+    await API.patch('/auth/change-password', {
+      currentPassword,
+      newPassword
+    });
+
+    Toast.success('Password updated successfully');
+
+  } catch (err) {
+
+    Toast.error(err.message);
+
+  }
+
+});
 
 }
