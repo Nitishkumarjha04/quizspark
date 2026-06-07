@@ -37,6 +37,12 @@ const API = (() => {
       delete:    id      => request('DELETE', `/quiz/${id}`),
       duplicate: id      => request('POST', `/quiz/${id}/duplicate`),
       mine:      ()      => request('GET', '/quiz?mine=true'),
+
+      submitAttempt: (id, body) =>
+      request('POST', `/quiz/${id}/attempt`, body, false),
+
+      attempts: id =>
+      request('GET', `/quiz/${id}/attempts`, null, false),
     },
     room: {
       create:  b    => request('POST', '/room', b),

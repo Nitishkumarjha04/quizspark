@@ -9,12 +9,13 @@
   Router.define('/join',            renderRoomJoin);
   Router.define('/quiz/new',        () => renderQuizBuilder());
   Router.define('/quiz/:id',        ({ id }) => renderQuizPreview({ id }));
+  Router.define('/quiz/:id/play', ({ id }) => renderPracticeQuiz({ id }));
   Router.define('/quiz/:id/edit',   ({ id }) => renderQuizBuilder({ id }));
   Router.define('/room/:code/host', ({ code }) => renderRoomHost({ code }));
   Router.define('/room/:code/play', ({ code }) => renderRoomPlayer({ code }));
   Router.define('/room/:code/results', ({ code }) => renderResults({ code }));
   Router.define('/profile', renderProfile);
-  
+
   Router.init();
 
   document.getElementById('logout-btn')?.addEventListener('click', () => {

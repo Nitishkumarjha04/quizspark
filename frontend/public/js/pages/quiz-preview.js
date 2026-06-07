@@ -10,7 +10,20 @@ async function renderQuizPreview({ id }) {
       <div class="page-sm">
         <div style="display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap;">
           <a href="/explore" class="btn-ghost" data-link>← Back</a>
-          ${isOwner ? `<a href="/quiz/${id}/edit" class="btn-outline" data-link>Edit</a><button class="btn-primary" onclick="hostQuiz('${id}')">▶ Host live</button>` : ''}
+         ${isOwner ? `
+<a href="/quiz/${id}/edit" class="btn-outline" data-link>Edit</a>
+
+<button class="btn-primary"
+        onclick="hostQuiz('${id}')">
+  ▶ Host live
+</button>
+` : ''}
+
+<a href="/quiz/${id}/play"
+   class="btn-outline"
+   data-link>
+   📝 Practice Quiz
+</a>
         </div>
         <div style="text-align:center;margin-bottom:32px;">
           <div style="font-size:52px;margin-bottom:12px;">${TOPIC_ICONS[q.topic]||'🎯'}</div>

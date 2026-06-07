@@ -6,6 +6,7 @@ const authRoutes = require('./routes/auth');
 const quizRoutes = require('./routes/quiz');
 const roomRoutes = require('./routes/room');
 const userRoutes = require('./routes/user');
+const attemptRoutes = require('./routes/attempt');
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.get('/health', (req, res) => res.json({ status: 'ok', ts: Date.now() }));
 
 app.use('/api/auth',  authRoutes);
 app.use('/api/quiz',  quizRoutes);
+app.use('/api/quiz', attemptRoutes);
 app.use('/api/room',  roomRoutes);
 app.use('/api/user',  userRoutes);
 
