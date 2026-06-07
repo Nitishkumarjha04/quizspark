@@ -198,7 +198,11 @@ button:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important;
   border-radius: var(--radius); overflow: hidden;
   transition: border-color 0.2s, transform 0.18s; cursor: pointer;
 }
-.quiz-card:hover { border-color: var(--border-hover); transform: translateY(-2px); }
+.quiz-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(124,92,252,0.25);
+}
 .quiz-card-cover {
   height: 120px; background: var(--surface2);
   display: flex; align-items: center; justify-content: center;

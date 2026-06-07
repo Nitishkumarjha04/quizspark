@@ -31,8 +31,8 @@ async function renderResults({ code }) {
       totalAnswers > 0
       ? Math.round((totalCorrect / totalAnswers) * 100)
       : 0;
-    document.getElementById('view').innerHTML = `
-      <div class="page-sm">
+       document.getElementById('view').innerHTML = `
+       <div class="page-sm">
         <div class="results-hero">
           <span class="results-emoji">🏆</span>
           <h1 class="results-title">${escapeHtml(room.quiz?.title||'Quiz')} — Results</h1>

@@ -4,13 +4,45 @@ async function renderDashboard() {
 
   document.getElementById('view').innerHTML = `
     <div class="page">
-      <div class="page-header">
+    <div class="card" style="
+       margin-bottom:24px;
+        background:linear-gradient(135deg,var(--accent),var(--accent2));
+        color:white;
+        border:none;
+       ">
+       <div style="
+       display:flex;
+       justify-content:space-between;
+       align-items:center;
+       flex-wrap:wrap;
+       gap:16px;
+        ">
         <div>
-          <h1 class="page-title">Dashboard</h1>
-          <p class="page-sub">Welcome back, ${escapeHtml(user.username)}</p>
+         <h1 style="
+        font-family:'Syne',sans-serif;
+        font-size:32px;
+          margin-bottom:6px;
+         ">
+        👋 Welcome back, ${escapeHtml(user.username)}
+         </h1>
+
+         <p style="opacity:.9;">
+         Ready to host another amazing quiz?
+         </p>
+         </div>
+
+        <a href="/quiz/new"
+         class="btn-outline"
+         data-link
+         style="
+         background:white;
+         color:black;
+         border:none;
+       ">
+        + Create Quiz
+         </a>
         </div>
-        <a href="/quiz/new" class="btn-primary" data-link>+ New quiz</a>
-      </div>
+          </div>
 
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:36px;" id="stats-row">
         <div class="stat-card"><div class="stat-num accent" id="st-created">—</div><div class="stat-label">Quizzes created</div></div>
@@ -43,8 +75,17 @@ async function renderDashboard() {
       el.innerHTML = `<div class="empty-state"><h3>No quizzes yet</h3><p>Create your first quiz to get started</p><br><a href="/quiz/new" class="btn-primary" data-link>+ Create quiz</a></div>`;
     } else {
       el.innerHTML = `<div class="quiz-grid">${data.quizzes.map(q => `
-        <div class="quiz-card">
-          <div class="quiz-card-cover">${TOPIC_ICONS[q.topic]||'🎯'}</div>
+          <div class="quiz-card-cover"
+          style="
+          background:linear-gradient(
+          135deg,
+          var(--accent),
+           var(--accent2)
+           );
+           color:white;
+            ">
+            ${TOPIC_ICONS[q.topic]||'🎯'}
+           </div>
           <div class="quiz-card-body">
             <div class="quiz-card-title">${escapeHtml(q.title)}</div>
             <div class="quiz-card-meta">
