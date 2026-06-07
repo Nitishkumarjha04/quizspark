@@ -4,7 +4,33 @@ async function renderResults({ code }) {
     const data = await API.room.results(code);
     const { leaderboard, room } = data;
     const top = leaderboard[0];
+       
+    const totalPlayers = leaderboard.length;
 
+    const totalScore = leaderboard.reduce(
+   (sum, p) => sum + p.score,
+   0
+   );
+
+     const averageScore =
+     totalPlayers > 0
+       ? Math.round(totalScore / totalPlayers)
+      : 0;
+
+      const totalCorrect = leaderboard.reduce(
+       (sum, p) => sum + (p.answers?.filter(a => a.correct).length || 0),
+      0
+     );
+
+     const totalAnswers = leaderboard.reduce(
+     (sum, p) => sum + (p.answers?.length || 0),
+     0
+     );
+
+     const accuracy =
+      totalAnswers > 0
+      ? Math.round((totalCorrect / totalAnswers) * 100)
+      : 0;
     document.getElementById('view').innerHTML = `
       <div class="page-sm">
         <div class="results-hero">
@@ -19,6 +45,25 @@ async function renderResults({ code }) {
           <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;">${escapeHtml(top.nickname)}</div>
           <div style="font-size:28px;font-weight:700;color:var(--accent);margin-top:4px;">${top.score.toLocaleString()} pts</div>
         </div>` : ''}
+
+        <div class="stats-row">
+
+         <div class="stat-card">
+         <div class="stat-num accent">${totalPlayers}</div>
+         <div class="stat-label">Players</div>
+        </div>
+
+        <div class="stat-card">
+        <div class="stat-num green">${averageScore}</div>
+         <div class="stat-label">Average Score</div>
+        </div>
+
+        <div class="stat-card">
+        <div class="stat-num">${accuracy}%</div>
+        <div class="stat-label">Accuracy</div>
+        </div>
+
+        </div>
 
         <div class="section-title">Full leaderboard</div>
         <div class="leaderboard" style="margin-bottom:28px;">
