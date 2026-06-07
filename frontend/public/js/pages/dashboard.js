@@ -74,34 +74,61 @@ async function renderDashboard() {
     if (!data.quizzes.length) {
       el.innerHTML = `<div class="empty-state"><h3>No quizzes yet</h3><p>Create your first quiz to get started</p><br><a href="/quiz/new" class="btn-primary" data-link>+ Create quiz</a></div>`;
     } else {
-      el.innerHTML = `<div class="quiz-grid">${data.quizzes.map(q => `
-          <div class="quiz-card-cover"
-          style="
-          background:linear-gradient(
-          135deg,
-          var(--accent),
+     el.innerHTML = `<div class="quiz-grid">${data.quizzes.map(q => `
+
+<div class="quiz-card">
+  <div class="quiz-card-cover"
+       style="
+         background:linear-gradient(
+           135deg,
+           var(--accent),
            var(--accent2)
-           );
-           color:white;
-            ">
-            ${TOPIC_ICONS[q.topic]||'🎯'}
-           </div>
-          <div class="quiz-card-body">
-            <div class="quiz-card-title">${escapeHtml(q.title)}</div>
-            <div class="quiz-card-meta">
-              <span class="badge badge-topic">${q.topic}</span>
-              <span class="badge badge-${q.difficulty}">${q.difficulty}</span>
-              <span class="badge badge-count">${q.questions?.length||0} Qs</span>
-              ${q.isPublic ? '<span class="badge" style="background:rgba(0,229,160,0.1);color:var(--green);">Public</span>' : '<span class="badge">Private</span>'}
-            </div>
-            <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;">
-              <button class="btn-primary" style="padding:7px 14px;font-size:13px;" onclick="hostQuiz('${q._id}')">▶ Host</button>
-              <a href="/quiz/${q._id}/edit" class="btn-outline" data-link style="padding:7px 14px;font-size:13px;">Edit</a>
-              <button class="btn-ghost" style="padding:7px 10px;font-size:13px;" onclick="duplicateQuiz('${q._id}')">⧉ Copy</button>
-              <button class="btn-danger" style="padding:7px 10px;font-size:13px;" onclick="deleteQuiz('${q._id}',this)">✕</button>
-            </div>
-          </div>
-        </div>`).join('')}</div>`;
+         );
+         color:white;
+       ">
+    ${TOPIC_ICONS[q.topic]||'🎯'}
+     </div>
+
+     <div class="quiz-card-body">
+      <div class="quiz-card-title">${escapeHtml(q.title)}</div>
+
+      <div class="quiz-card-meta">
+      <span class="badge badge-topic">${q.topic}</span>
+      <span class="badge badge-${q.difficulty}">${q.difficulty}</span>
+      <span class="badge badge-count">${q.questions?.length||0} Qs</span>
+
+      ${q.isPublic
+        ? '<span class="badge" style="background:rgba(0,229,160,0.1);color:var(--green);">Public</span>'
+        : '<span class="badge">Private</span>'}
+    </div>
+
+    <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;">
+      <button class="btn-primary" style="padding:7px 14px;font-size:13px;" onclick="hostQuiz('${q._id}')">▶ Host</button>
+
+      <a href="/quiz/${q._id}/edit"
+         class="btn-outline"
+         data-link
+         style="padding:7px 14px;font-size:13px;">
+         Edit
+      </a>
+
+      <button class="btn-ghost"
+              style="padding:7px 10px;font-size:13px;"
+              onclick="duplicateQuiz('${q._id}')">
+        ⧉ Copy
+      </button>
+
+      <button class="btn-danger"
+              style="padding:7px 10px;font-size:13px;"
+              onclick="deleteQuiz('${q._id}',this)">
+        ✕
+      </button>
+    </div>
+
+       </div>
+     </div>
+
+     `).join('')}</div>`;
     }
   } catch (err) {
     document.getElementById('my-quizzes').innerHTML = `<div class="empty-state"><h3>${err.message}</h3></div>`;
